@@ -276,6 +276,7 @@ private fun DrawScope.drawWheel(text: TextMeasurer) {
 }
 
 // Drawn as paths because symbol glyphs such as the play triangle are not present in every system font.
+// *looks at Windows*
 private fun DrawScope.drawTriangle(
     centerX: Float,
     centerY: Float,

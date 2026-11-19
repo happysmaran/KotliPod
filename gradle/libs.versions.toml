@@ -35,6 +35,9 @@ compose-material3 = { module = "org.jetbrains.compose.material3:material3", vers
 compose-ui = { module = "org.jetbrains.compose.ui:ui", version.ref = "composeMultiplatform" }
 compose-components-resources = { module = "org.jetbrains.compose.components:components-resources", version.ref = "composeMultiplatform" }
 compose-uiToolingPreview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "composeMultiplatform" }
+jaudiotagger = { module = "net.jthink:jaudiotagger", version = "3.0.1" }
+javasound-aac = { module = "com.tianscar.javasound:javasound-aac", version = "0.9.8" }
+mp3spi = { module = "com.googlecode.soundlibs:mp3spi", version = "1.9.5.4" }
 kotlinx-coroutinesSwing = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 
 [plugins]

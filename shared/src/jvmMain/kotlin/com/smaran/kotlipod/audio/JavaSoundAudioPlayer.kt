@@ -8,8 +8,10 @@ import javax.sound.sampled.AudioSystem
 import javax.sound.sampled.Clip
 import javax.sound.sampled.LineEvent
 import javax.sound.sampled.LineUnavailableException
+import kotlin.concurrent.Volatile
 
 class JavaSoundAudioPlayer : AudioPlayer {
+    @Volatile
     private var clip: Clip? = null
 
     @Volatile
@@ -24,6 +26,7 @@ class JavaSoundAudioPlayer : AudioPlayer {
     override val durationMs: Long
         get() = (clip?.microsecondLength ?: 0L) / 1000
 
+    @Synchronized
     override fun load(path: String) {
         release()
         val decoded = decodeToPcm(File(path))
@@ -38,6 +41,7 @@ class JavaSoundAudioPlayer : AudioPlayer {
         clip = newClip
     }
 
+    @Synchronized
     override fun play() {
         val current = requireClip()
         if (state == PlaybackState.Playing) return
@@ -46,6 +50,7 @@ class JavaSoundAudioPlayer : AudioPlayer {
         current.start()
     }
 
+    @Synchronized
     override fun pause() {
         val current = clip ?: return
         if (state != PlaybackState.Playing) return
@@ -54,6 +59,7 @@ class JavaSoundAudioPlayer : AudioPlayer {
         current.stop()
     }
 
+    @Synchronized
     override fun stop() {
         val current = clip ?: return
         state = PlaybackState.Stopped
@@ -61,11 +67,13 @@ class JavaSoundAudioPlayer : AudioPlayer {
         current.setFramePosition(0)
     }
 
+    @Synchronized
     override fun seekTo(positionMs: Long) {
         val current = clip ?: return
         current.setMicrosecondPosition(positionMs.coerceIn(0L, durationMs) * 1000)
     }
 
+    @Synchronized
     override fun close() = release()
 
     private fun onLineStopped(stopped: Clip) {

@@ -15,8 +15,10 @@ interface AudioPlayer {
     var onTrackEnded: (() -> Unit)?
 
     // Replaces any previously loaded track; throws AudioLoadException if the file cannot be played.
+    // Decoding can take seconds for a long track, so callers keep this off the UI thread.
     fun load(path: String)
 
+    // Throws IllegalStateException when no track has been loaded.
     fun play()
     fun pause()
     fun stop()

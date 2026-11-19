@@ -75,7 +75,7 @@ class NavigatorTest {
 
     @Test
     fun emptyLibraryStillOpensMusicBrowsingScreens() {
-        val nav = Navigator(MenuTree.build(emptyList()))
+        val nav = Navigator(MenuTree.build())
         nav.handle(Input.Select)
         assertEquals("Music", nav.screen.title)
         nav.handle(Input.Scroll(3))
@@ -84,5 +84,36 @@ class NavigatorTest {
         assertEquals(0, nav.screen.rows.size)
         nav.handle(Input.Scroll(1))
         assertEquals(0, nav.screen.selectedIndex)
+    }
+
+    @Test
+    fun selectingAnActionRunsItInsteadOfOpeningAScreen() {
+        var runs = 0
+        val nav = Navigator(MenuNode.branch("Root") { listOf(MenuNode.action("Do it") { runs++ }) })
+        nav.handle(Input.Select)
+        assertEquals(1, runs)
+        assertEquals("Root", nav.screen.title)
+    }
+
+    @Test
+    fun refreshRebuildsTheScreenAndKeepsTheSelection() {
+        var items = letters("a", 3)
+        val nav = Navigator(MenuNode.branch("Root") { items })
+        nav.handle(Input.Scroll(2))
+        items = letters("b", 5)
+        nav.refresh()
+        assertEquals(listOf("b1", "b2", "b3", "b4", "b5"), nav.screen.rows.map { it.text })
+        assertEquals(2, nav.screen.selectedIndex)
+    }
+
+    @Test
+    fun refreshClampsTheSelectionWhenTheListShrinks() {
+        var items = letters("a", 6)
+        val nav = Navigator(MenuNode.branch("Root") { items }, visibleRows = 2)
+        nav.handle(Input.Scroll(5))
+        items = letters("b", 2)
+        nav.refresh()
+        assertEquals(1, nav.screen.selectedIndex)
+        assertEquals(0, nav.screen.firstVisibleIndex)
     }
 }

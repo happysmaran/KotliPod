@@ -6,13 +6,20 @@ package com.smaran.kotlipod.core
 class MenuNode private constructor(
     val title: String,
     private val childrenProvider: (() -> List<MenuNode>)?,
+    private val selectAction: (() -> Unit)?,
 ) {
     val hasChildren: Boolean get() = childrenProvider != null
+    val isAction: Boolean get() = selectAction != null
 
     fun children(): List<MenuNode> = childrenProvider?.invoke().orEmpty()
 
+    fun select() {
+        selectAction?.invoke()
+    }
+
     companion object {
-        fun leaf(title: String) = MenuNode(title, null)
-        fun branch(title: String, children: () -> List<MenuNode>) = MenuNode(title, children)
+        fun leaf(title: String) = MenuNode(title, null, null)
+        fun branch(title: String, children: () -> List<MenuNode>) = MenuNode(title, children, null)
+        fun action(title: String, onSelect: () -> Unit) = MenuNode(title, null, onSelect)
     }
 }

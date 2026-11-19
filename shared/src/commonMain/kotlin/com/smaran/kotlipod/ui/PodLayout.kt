@@ -43,5 +43,5 @@ internal object Palette {
     val Battery = Color(0xFF4CAF50)
     val WheelRing = Color(0xFF353537)
     val WheelButton = Color(0xFF29292B)
-    val WheelGlyph = Color(0xFFAAAAAA)
+    val WheelGlyph = Color(0xFFFFFFFF)
 }

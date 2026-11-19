@@ -39,6 +39,7 @@ kotlin {
     }
     sourceSets {
         androidMain.dependencies {
+            implementation(libs.androidx.activity.compose)
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.compose.uiTooling)
         }
@@ -51,6 +52,11 @@ kotlin {
             implementation(libs.compose.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
+        }
+        jvmMain.dependencies {
+            implementation(libs.mp3spi)
+            implementation(libs.javasound.aac)
+            implementation(libs.jaudiotagger)
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)
