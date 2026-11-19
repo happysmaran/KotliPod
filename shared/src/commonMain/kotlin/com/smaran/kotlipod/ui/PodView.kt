@@ -249,7 +249,8 @@ private fun DrawScope.drawWheel(text: TextMeasurer) {
     drawCircle(Palette.BodyEdge, buttonRadius, center, style = Stroke(width = 1f))
 
     val glyph = Palette.WheelGlyph
-    val reach = (radius + buttonRadius) / 2f
+    // Legends sit near the wheel's outer edge, leaving a small margin for the glyph's own size.
+    val reach = radius - 16f
 
     drawLabel(
         measurer = text,
@@ -267,12 +268,14 @@ private fun DrawScope.drawWheel(text: TextMeasurer) {
     drawRect(glyph, Offset(center.x + 6.5f, bottom - 5f), Size(2.5f, 10f))
 
     val right = center.x + reach
-    drawTriangle(right - 4f, center.y, 6f, glyph, pointingRight = true)
-    drawTriangle(right + 4f, center.y, 6f, glyph, pointingRight = true)
+    drawTriangle(right - 6f, center.y, 6f, glyph, pointingRight = true)
+    drawTriangle(right + 2f, center.y, 6f, glyph, pointingRight = true)
+    drawRect(glyph, Offset(right + 8.5f, center.y - 6f), Size(2.5f, 12f))
 
     val left = center.x - reach
-    drawTriangle(left - 4f, center.y, 6f, glyph, pointingRight = false)
-    drawTriangle(left + 4f, center.y, 6f, glyph, pointingRight = false)
+    drawTriangle(left + 6f, center.y, 6f, glyph, pointingRight = false)
+    drawTriangle(left - 2f, center.y, 6f, glyph, pointingRight = false)
+    drawRect(glyph, Offset(left - 11f, center.y - 6f), Size(2.5f, 12f))
 }
 
 // Drawn as paths because symbol glyphs such as the play triangle are not present in every system font.

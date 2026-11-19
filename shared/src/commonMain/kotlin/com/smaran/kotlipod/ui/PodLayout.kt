@@ -20,7 +20,7 @@ internal object PodLayout {
     const val ROW_HEIGHT = 18f
 
     const val WHEEL_CENTER_X = 115.8f
-    const val WHEEL_CENTER_Y = 400f
+    const val WHEEL_CENTER_Y = (SCREEN_TOP + SCREEN_HEIGHT + BODY_HEIGHT) / 2f
     const val WHEEL_RADIUS = 90f
 
     // Wheel gestures are interpreted relative to the wheel, independent of the pod's size on screen.
